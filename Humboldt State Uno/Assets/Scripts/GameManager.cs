@@ -142,6 +142,12 @@ public class GameManager : MonoBehaviour
     public GameObject AiCard2;
     public GameObject AiCard3;
     public GameObject PlayerCard;
+    public GameObject PauseButton;
+    public GameObject winText;
+    public GameObject AI1win;
+    public GameObject AI2win;
+    public GameObject AI3win;
+    public GameObject Playerwin;
 
     //List that are used in the game
     public List<Card> playerDeck = new List<Card>();
@@ -163,8 +169,6 @@ public class GameManager : MonoBehaviour
     public Text AI1CardCount;
     public Text AI2CardCount;
     public Text AI3CardCount;
-    public Text winText;
-
 
     public class Card
     {
@@ -1259,29 +1263,54 @@ public class GameManager : MonoBehaviour
         drawnObjectPile.Add(DrawPile);
 
 
-        for (int i = 0, j = 0,r = 0; i < 50; i++)
+        for (int i = 0, j = 0, r = 0; i < 1000; i++)
         {
+            //i plus j if its a reverse is played.
             i = i + j;
             r++; 
        
-            if (r > 2)
+            //R can not go above 2 since that is how the game is tracked.
+            if (r > 3)
             {
                 r = 0;
+                Debug.Log("testing to check if working");
             }
+
             if (playerDeck.Count -1 == 0)
             {
                 playerDeck = Shuffle(playerDeck);
             }
                
-            if (r == 0 || r == 1 || r == 2)
+            if (r == 0 || r == 1 || r == 2 || r == 3)
             {
                 //First create a new tempList to access each "players hand"
                 List<Card> tempList = gamerTracker[r];
 
                 if (tempList.Count - 1 == 0)
                 {
-                    i = i + 101;
+                    i = i + 1001;
                     AI1CardCount.text = AI1Hand.Count.ToString();
+                    winText.active = true;
+
+                    if(gamerTracker[r] == AI1Hand)
+                    {
+                        AI1win.active = true;
+                    }
+
+                    if (gamerTracker[r] == AI2Hand)
+                    {
+                        AI2win.active = true;
+                    }
+
+                    if (gamerTracker[r] == AI3Hand)
+                    {
+                        AI3win.active = true;
+                    }
+
+                    if (gamerTracker[r] == playerHand)
+                    {
+                        Playerwin.active = true;
+                    }
                     break;
                 }
                     
@@ -1307,13 +1336,10 @@ public class GameManager : MonoBehaviour
                         DrawPile.transform.SetParent(DrawnPile.transform, false);
                         drawnObjectPile.Add(DrawPile);
 
-                        Debug.Log("it might be okay");
-
-
                         AI1CardCount.text = AI1Hand.Count.ToString();
                         AI2CardCount.text = AI2Hand.Count.ToString();
                         AI3CardCount.text = AI3Hand.Count.ToString();
-                        r = r + 1;
+                        r++;
                         t = tempList.Count;
                         break;       
                         
@@ -1323,10 +1349,8 @@ public class GameManager : MonoBehaviour
                     {
                     
                         DrawCard(tempList);
-                        t = tempList.Count;
-                        r = r + 1;
+                        r++;
                         break;
-
                     }
                 }
             }

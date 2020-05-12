@@ -68,6 +68,7 @@
     <Compile Include="Assets\OnCardSelection.cs" />
     <Compile Include="Assets\Scripts\Clicking.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Pause.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Bradley/Desktop/Data structures/PathFinder/PathFinder/Humboldt State Uno/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
